@@ -6,7 +6,6 @@
   "outputDirectory": "dist/client",
   "functions": {
     "api/ssr.js": {
-      "runtime": "nodejs20.x",
       "memory": 1024,
       "maxDuration": 30,
       "includeFiles": "dist/server/**"
