@@ -9,11 +9,14 @@
       "memory": 1024,
       "maxDuration": 30,
       "includeFiles": "dist/server/**"
+    },
+    "api/debug.js": {
+      "maxDuration": 10
     }
   },
   "rewrites": [
     {
-      "source": "/((?!assets/).*)",
+      "source": "/((?!assets/|api/).*)",
       "destination": "/api/ssr.js"
     }
   ],
