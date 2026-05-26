@@ -18,6 +18,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { DashboardLoader } from "@/components/ui/dashboard-loader";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { signInWithEmail, signUpWithEmail, signOut } from "@/lib/firebase/auth";
@@ -914,45 +915,7 @@ export function AuthShell({ mode }: { mode: "login" | "signup" }) {
   </div>
 
       <AnimatePresence>
-        {loading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-[#0D0E12]/85 backdrop-blur-md flex flex-col items-center justify-center p-6"
-          >
-            {/* Glowing Ambient Backdrop */}
-            <div className="absolute w-[250px] h-[250px] bg-[#5E6AD2] blur-[120px] rounded-full opacity-30 animate-pulse" />
-            
-            <div className="relative flex flex-col items-center text-center space-y-6 max-w-sm">
-              {/* Spinner */}
-              <div className="relative w-16 h-16">
-                <div className="absolute inset-0 rounded-full border-4 border-white/5" />
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 rounded-full border-4 border-t-[#5E6AD2] border-r-[#00C896] border-b-transparent border-l-transparent"
-                />
-              </div>
-
-              {/* Progress Text */}
-              <div className="space-y-2">
-                <motion.p
-                  key={loadingPhase}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  className="text-[15px] font-semibold text-white tracking-tight"
-                >
-                  {loadingPhase}
-                </motion.p>
-                <p className="text-[12px] text-[#5C5F73] uppercase tracking-wider font-bold">
-                  Please hold tight
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
+        {loading && <DashboardLoader phase={loadingPhase} />}
       </AnimatePresence>
 
     </div>

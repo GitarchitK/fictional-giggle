@@ -43,6 +43,8 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { GlobalSearch } from "@/components/global-search";
+import { DashboardLoader } from "@/components/ui/dashboard-loader";
+
 
 const NAV_ITEMS = [
   { to: "/dashboard",           label: "Dashboard",     icon: LayoutDashboard },
@@ -584,22 +586,9 @@ export function DashboardShell() {
   }, [profile, navigate]);
 
   if (loading) {
-    return (
-      <div className="min-h-screen w-screen bg-[#0D0E12] flex flex-col items-center justify-center p-6 relative overflow-hidden">
-        {/* Ambient Gradient Glow */}
-        <div className="absolute w-[200px] h-[200px] bg-[#5E6AD2] blur-[100px] rounded-full opacity-25" />
-        <div className="relative flex flex-col items-center text-center space-y-4">
-          <div className="relative w-10 h-10">
-            <div className="absolute inset-0 rounded-full border-2 border-white/5" />
-            <div className="absolute inset-0 rounded-full border-2 border-t-[#5E6AD2] border-r-[#00C896] border-b-transparent border-l-transparent animate-spin" />
-          </div>
-          <p className="text-[11px] text-[#5C5F73] uppercase tracking-wider font-semibold">
-            Connecting...
-          </p>
-        </div>
-      </div>
-    );
+    return <DashboardLoader />;
   }
+
 
   const displayName = profile?.fullName ?? user?.displayName ?? "User";
   const initials = displayName
