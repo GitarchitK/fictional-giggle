@@ -6,7 +6,7 @@
  * All exports are lazy — initialized only when first accessed in the browser.
  */
 import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
-import { getAuth, type Auth } from "firebase/auth";
+import { getAuth, browserLocalPersistence, setPersistence, type Auth } from "firebase/auth";
 import { getFirestore, type Firestore } from "firebase/firestore";
 import { getStorage, type FirebaseStorage } from "firebase/storage";
 
@@ -46,6 +46,8 @@ function getFirebaseAuth(): Auth | null {
   const app = getFirebaseApp();
   if (!app) return null;
   _auth = getAuth(app);
+  // Explicitly set local persistence so sessions survive page refreshes
+  setPersistence(_auth, browserLocalPersistence).catch(() => {});
   return _auth;
 }
 

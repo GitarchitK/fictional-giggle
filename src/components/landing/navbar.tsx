@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { signOut } from "@/lib/firebase/auth";
 import { toast } from "sonner";
@@ -15,7 +15,7 @@ const NAV_LINKS = [
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const navigate = useNavigate();
 
   async function handleSignOut() {
@@ -72,7 +72,13 @@ export function Navbar() {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          {user ? (
+          {loading ? (
+            // Skeleton while Firebase resolves auth — prevents flash of wrong buttons
+            <div className="flex items-center gap-3">
+              <div className="h-9 w-24 rounded-lg bg-white/5 animate-pulse" />
+              <div className="h-9 w-20 rounded-lg bg-white/5 animate-pulse" />
+            </div>
+          ) : user ? (
             <div className="flex items-center gap-3">
               <Link
                 to="/dashboard"
@@ -149,7 +155,9 @@ export function Navbar() {
                 )
               ))}
               <div className="pt-3 border-t border-[#2A2D3A] flex flex-col gap-2">
-                {user ? (
+                {loading ? (
+                  <div className="h-10 rounded-lg bg-white/5 animate-pulse" />
+                ) : user ? (
                   <>
                     <Link
                       to="/dashboard"
